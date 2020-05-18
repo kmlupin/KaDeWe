@@ -133,7 +133,6 @@ prism1:edition a owl:DatatypeProperty ;
 Noch Pr. Sasaki au jeder Moment für uns verfügbar war. Jeder Teilnehmer hat einem Entscheidenden Rolle gespielt, dazu hat jeder Idee uns noch mehr am Licht gebracht.
 Das Ergebnis ist nach unserem Gedanken und Erkenntnisse gut, aber es hättet besser gewesen, fall uns die Software zu Verfügung gestanden hat. Die Nutzung des Elvis Software hättet uns mehr zu Erfahrung gebracht, als was man bis jetzt denkt.
 
-![HALLO TEST]
-(http://icancode.de/wp-content/uploads/2015/02/Github-hochgeladenes-Bild.png)
+![HALLO TEST](http://icancode.de/wp-content/uploads/2015/02/Github-hochgeladenes-Bild.png)
 
 
