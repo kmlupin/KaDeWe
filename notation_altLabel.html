@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sparql Query Webapp CORNELSEN (notation/altLabel)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>
+  thead > tr > th {
+    color: blue;
+  }
+  </style>
+</head>
+<body>
+  <h1>Sparql Query Webapp CORNELSEN (notation/altLabel)</h1>
+  <div id="app">
+    {{ info }}
+    <div v-if="this.querybindings[0]">
+      <table border="1">
+        <thead>
+          <tr>
+          <th v-for="(result, index) in this.variables">{{result}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(binding, bindingIndex) in this.querybindings">
+          <td v-for="(entry,entryIndex) in binding">
+            {{entry.value}}
+          </td>
+        </tbody>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+  new Vue({
+    el: '#app',
+    data () {
+      return {
+        info: null,
+        variables : [],
+        querybindings : []
+      }
+    },
+    methods: {
+      processResponse: function(response){
+        this.info = "Ein Ergebnis wurde gefunden. Die Tripel sind unten aufgelistet."
+        this.variables = response.data.head.vars
+        this.querybindings = response.data.results.bindings
+      },
+      noResponse: function(){
+        this.info = "Query did not work. The Sparql endpoint may not be available or the query may be malformed."
+      }
+    },
+    mounted () {
+      sparqlQuery ="PREFIX skos: <http://www.w3.org/2004/02/skos/core#> SELECT ?notation ?altLabel WHERE { ?x skos:notation ?notation; skos:altLabel ?altLabel. OPTIONAL {?x skos:prefLabel ?prefLabel.} FILTER (bound(?prefLabel))}ORDER BY ?notation"
+      completeQuery = "http://kmlupin.herokuapp.com/ds/query?query=" + encodeURIComponent(sparqlQuery) + "&output=json"
+      axios.get(completeQuery).
+      then(response => (
+        this.processResponse(response)
+      ))
+      .catch( error => { this.noResponse()  })
+    }
+  })
+  </script>
+</body>
+</html>
